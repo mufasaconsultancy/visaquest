@@ -345,9 +345,11 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
         <div style={{ background: "#0a0a0a", borderRadius: 16, padding: "28px 24px", marginTop: 24, textAlign: "center" }}>
           <p style={{ color: "#fff", fontWeight: 700, fontSize: 18, margin: "0 0 8px" }}>Need help with your application?</p>
           <p style={{ color: "#aaa", fontSize: 14, margin: "0 0 20px" }}>Get a 1-on-1 review from a migration expert.</p>
-          <button style={{ background: "#1a6fff", color: "#fff", border: "none", borderRadius: 10, padding: "13px 28px", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>
-            Book a consultation
-          </button>
+          <a href="https://calendly.com/admin-mufasa/visa-document-review" target="_blank" rel="noopener noreferrer">
+            <button style={{ background: "#1a6fff", color: "#fff", border: "none", borderRadius: 10, padding: "13px 28px", fontSize: 15, fontWeight: 700, cursor: "pointer" }}>
+              Book a consultation
+            </button>
+          </a>
         </div>
       </div>
     </div>
