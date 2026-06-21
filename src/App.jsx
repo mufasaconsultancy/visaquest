@@ -116,7 +116,7 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
 
         {/* Nav */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "24px 0 0" }}>
-          <span style={{ fontWeight: 800, fontSize: 18, color: "#111", letterSpacing: "-0.5px" }}>🦘 VisaReady</span>
+          <span style={{ fontWeight: 800, fontSize: 18, color: "#111", letterSpacing: "-0.5px" }}>🦘 VisaQuest</span>
           <span style={{ fontSize: 12, background: "#e8f4ff", color: "#1a6fff", padding: "4px 10px", borderRadius: 20, fontWeight: 600 }}>Australia</span>
         </div>
 
@@ -134,7 +134,9 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
           </p>
           <button
             onClick={() => setStep("select")}
-            style={{ background: "#1a6fff", color: "#fff", border: "none", borderRadius: 12, padding: "16px 40px", fontSize: 17, fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 20px rgba(26,111,255,0.35)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 28px rgba(26,111,255,0.45)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 4px 20px rgba(26,111,255,0.35)"; }}
+            style={{ background: "#1a6fff", color: "#fff", border: "none", borderRadius: 12, padding: "16px 40px", fontSize: 17, fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 20px rgba(26,111,255,0.35)", transition: "transform 0.15s, box-shadow 0.15s" }}
           >
             Build my checklist →
           </button>
@@ -175,7 +177,20 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 20px" }}>
         <div style={{ display: "flex", alignItems: "center", padding: "24px 0 40px", gap: 16 }}>
           <button onClick={() => setStep("landing")} style={{ background: "none", border: "1px solid #e5e7eb", borderRadius: 8, padding: "8px 14px", cursor: "pointer", fontSize: 14, color: "#555" }}>← Back</button>
-          <span style={{ fontWeight: 800, fontSize: 18, color: "#111", letterSpacing: "-0.5px" }}>🦘 VisaReady</span>
+          <span style={{ fontWeight: 800, fontSize: 18, color: "#111", letterSpacing: "-0.5px" }}>🦘 VisaQuest</span>
+        </div>
+
+        {/* Step indicator */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 32 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "#1a6fff" }}>
+            <span style={{ width: 22, height: 22, borderRadius: "50%", background: "#1a6fff", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>1</span>
+            Visa type
+          </div>
+          <div style={{ flex: 1, height: 2, background: selectedVisa ? "#1a6fff" : "#e5e7eb", borderRadius: 2, transition: "background 0.3s" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: selectedVisa ? "#1a6fff" : "#bbb" }}>
+            <span style={{ width: 22, height: 22, borderRadius: "50%", background: selectedVisa ? "#1a6fff" : "#e5e7eb", color: selectedVisa ? "#fff" : "#999", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, transition: "all 0.3s" }}>2</span>
+            Situation
+          </div>
         </div>
 
         <h2 style={{ fontSize: 28, fontWeight: 800, color: "#0a0a0a", margin: "0 0 8px", letterSpacing: "-1px" }}>Which visa are you applying for?</h2>
@@ -189,6 +204,8 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
                 <button
                   key={v.id}
                   onClick={() => { setSelectedVisa(v.id); setSelectedSituation(""); }}
+                  onMouseEnter={(e) => { if (selectedVisa !== v.id) e.currentTarget.style.borderColor = categoryColors[cat] + "80"; }}
+                  onMouseLeave={(e) => { if (selectedVisa !== v.id) e.currentTarget.style.borderColor = "#e5e7eb"; }}
                   style={{
                     background: selectedVisa === v.id ? `${categoryColors[cat]}10` : "#fff",
                     border: `2px solid ${selectedVisa === v.id ? categoryColors[cat] : "#e5e7eb"}`,
@@ -254,7 +271,7 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", padding: "24px 0 32px", gap: 16 }}>
           <button onClick={() => setStep("select")} style={{ background: "none", border: "1px solid #e5e7eb", borderRadius: 8, padding: "8px 14px", cursor: "pointer", fontSize: 14, color: "#555" }}>← Back</button>
-          <span style={{ fontWeight: 800, fontSize: 18, color: "#111", letterSpacing: "-0.5px" }}>🦘 VisaReady</span>
+          <span style={{ fontWeight: 800, fontSize: 18, color: "#111", letterSpacing: "-0.5px" }}>🦘 VisaQuest</span>
         </div>
 
         {/* Visa title */}
@@ -271,8 +288,11 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
             <span style={{ fontSize: 14, fontWeight: 700, color: "#1a6fff" }}>{checkedCount}/{totalItems} docs</span>
           </div>
           <div style={{ background: "#f0f4ff", borderRadius: 99, height: 8 }}>
-            <div style={{ background: "#1a6fff", borderRadius: 99, height: 8, width: `${progress}%`, transition: "width 0.3s" }} />
+            <div style={{ background: progress === 100 ? "#00a86b" : "#1a6fff", borderRadius: 99, height: 8, width: `${progress}%`, transition: "width 0.3s, background 0.3s" }} />
           </div>
+          {progress === 100 && (
+            <p style={{ margin: "12px 0 0", fontSize: 13, color: "#00a86b", fontWeight: 600 }}>🎉 All documents checked off — you're ready to apply!</p>
+          )}
         </div>
 
         {/* Categories */}
@@ -291,6 +311,8 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
                   <div
                     key={itemIdx}
                     onClick={() => toggleCheck(catIdx, itemIdx)}
+                    onMouseEnter={(e) => { if (!done) e.currentTarget.style.background = "#f0f4ff"; }}
+                    onMouseLeave={(e) => { if (!done) e.currentTarget.style.background = "#fafafa"; }}
                     style={{
                       display: "flex", gap: 12, alignItems: "flex-start", cursor: "pointer",
                       padding: "12px", borderRadius: 10, background: done ? "#f0faf5" : "#fafafa",
@@ -351,6 +373,13 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no backt
             </button>
           </a>
         </div>
+
+        <button
+          onClick={() => { setStep("select"); setSelectedVisa(null); setSelectedSituation(""); setChecklist(null); setChecked({}); }}
+          style={{ width: "100%", background: "#fff", color: "#555", border: "1.5px solid #e5e7eb", borderRadius: 12, padding: "14px", fontSize: 14, fontWeight: 600, cursor: "pointer", marginTop: 16 }}
+        >
+          ↻ Start a new checklist
+        </button>
       </div>
     </div>
   );
