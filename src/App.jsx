@@ -60,7 +60,7 @@ export default function App() {
     const prompt = `${CHECKLIST_PROMPTS[selectedVisa]}
 Applicant situation: ${selectedSituation}.
 
-Return ONLY a valid JSON object with this exact structure (no markdown, no backticks):
+Return ONLY a valid JSON object with this exact structure (no markdown, no backticks). Keep it concise: 3-5 categories, 2-4 items per category, details under 25 words each, max 4 tips.
 {
   "visaName": "Full visa name",
   "summary": "2-sentence plain English summary of this visa pathway",
